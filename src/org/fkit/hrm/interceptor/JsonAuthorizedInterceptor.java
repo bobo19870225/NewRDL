@@ -71,6 +71,7 @@ public class JsonAuthorizedInterceptor implements HandlerInterceptor {
 			/** 2.判断用户是否已经登录 */
 			if (user == null) {
 				ObjectMapper objectMapper = new ObjectMapper();
+				message.clean();
 				message.setCode(1003);
 				message.setMsg("用户未登录！");
 				String userJsonStr = objectMapper.writeValueAsString(message);// 返回字符串，输出
