@@ -22,11 +22,13 @@ import org.fkit.hrm.util.tag.PageModel;
  */
 public interface StockService {
 	/**
-	 * 获取全部商品
 	 * 
-	 * @return 商品列表
+	 * @param stock
+	 * @param pageModel
+	 *            分页信息
+	 * @return 带分页的库存记录列表
 	 */
-	List<Goods> getAllGoods();
+	List<Goods> getGoodsList(Goods goods, PageModel pageModel);
 
 	/**
 	 * 获取某个商品的详情
@@ -64,13 +66,6 @@ public interface StockService {
 	 * @return 买家详情
 	 */
 	Buyer getBuyerDetails(Integer id);
-
-	/**
-	 * 获取所有库存记录列表
-	 * 
-	 * @return 所有库存记录
-	 */
-	List<Stock> getAllStock();
 
 	/**
 	 * 

@@ -10,7 +10,7 @@ import java.sql.Date;
  *
  */
 public class Goods {
-	private int id;
+	private Integer id;
 	private String number;
 	private String goodsName;
 	private BigDecimal unitPrice;// 单价
@@ -23,11 +23,11 @@ public class Goods {
 		super();
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

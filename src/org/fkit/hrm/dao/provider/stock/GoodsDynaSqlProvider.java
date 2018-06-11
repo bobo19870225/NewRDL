@@ -1,22 +1,22 @@
 package org.fkit.hrm.dao.provider.stock;
 
-import static org.fkit.hrm.util.common.HrmConstants.STOCKTABLE;
+import static org.fkit.hrm.util.common.HrmConstants.GOODSTABLE;
 
 import java.util.Map;
 
 import org.apache.ibatis.jdbc.SQL;
-import org.fkit.hrm.domain.stock.Stock;
+import org.fkit.hrm.domain.stock.Goods;
 
-public class StockDynaSqlProvider {
+public class GoodsDynaSqlProvider {
 	// 分页动态查询
 	public String selectWhitParam(Map<String, Object> params) {
 		String sql = new SQL() {
 			{
 				SELECT("*");
-				FROM(STOCKTABLE);
-				if (params.get("stock") != null) {
-					Stock stock = (Stock) params.get("stock");
-					if (stock.getGoodsId() != null && stock.getGoodsId() != 0) {
+				FROM(GOODSTABLE);
+				if (params.get("goods") != null) {
+					Goods goods = (Goods) params.get("goods");
+					if (goods.getId() != null && goods.getId() != 0) {
 						WHERE(" goodsId = #{stock.goodsId} ");
 					}
 				}
@@ -35,10 +35,10 @@ public class StockDynaSqlProvider {
 		return new SQL() {
 			{
 				SELECT("count(*)");
-				FROM(STOCKTABLE);
-				if (params.get("stock") != null) {
-					Stock stock = (Stock) params.get("stock");
-					if (stock.getGoodsId() != null && stock.getGoodsId() != 0) {
+				FROM(GOODSTABLE);
+				if (params.get("goods") != null) {
+					Goods goods = (Goods) params.get("goods");
+					if (goods.getId() != null && goods.getId() != 0) {
 						WHERE(" goodsId = #{stock.goodsId} ");
 					}
 				}

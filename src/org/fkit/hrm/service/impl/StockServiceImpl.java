@@ -1,7 +1,6 @@
 
 package org.fkit.hrm.service.impl;
 
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,13 +54,20 @@ public class StockServiceImpl implements StockService {
 	@Autowired
 	private AreaDao areaDao;
 
-	/**
-	 * @see StockService
-	 */
-	@Transactional(readOnly = true)
 	@Override
-	public List<Goods> getAllGoods() {
-		return goodsDao.selectAllGoods();
+	public List<Goods> getGoodsList(Goods goods, PageModel pageModel) {
+		/** 当前需要分页的总数据条数 */
+		Map<String, Object> params = new HashMap<>();
+		params.put("goods", goods);
+		int recordCount = goodsDao.count(params);
+		pageModel.setRecordCount(recordCount);
+		if (recordCount > 0) {
+			/** 开始分页查询数据：查询第几页的数据 */
+			params.put("pageModel", pageModel);
+		}
+		List<Goods> goodsList = goodsDao.selectByPage(params);
+		return goodsList;
+
 	}
 
 	@Transactional(readOnly = true)
@@ -92,12 +98,6 @@ public class StockServiceImpl implements StockService {
 	@Override
 	public Buyer getBuyerDetails(Integer id) {
 		return buyerDao.getBuyerDetails(id);
-	}
-
-	@Transactional(readOnly = true)
-	@Override
-	public List<Stock> getAllStock() {
-		return stockDao.selectAllStock();
 	}
 
 	@Transactional(readOnly = true)
