@@ -5,26 +5,14 @@ import java.sql.Date;
 public class UserToken {
 	private Integer id;
 	private Integer userId;
-	private String userToken;
+	private String token;
 	private Date createTime;
 	private Date refreshTime;
-	private Date vaildTime;
-	private Integer isVaild;
+	private Date validTime;
+	private Integer isValid;
 
 	public UserToken() {
 		super();
-	}
-
-	public UserToken(Integer id, Integer userId, String userToken, Date createTime, Date refreshTime, Date vaildTime,
-			Integer isVaild) {
-		super();
-		this.id = id;
-		this.userId = userId;
-		this.userToken = userToken;
-		this.createTime = createTime;
-		this.refreshTime = refreshTime;
-		this.vaildTime = vaildTime;
-		this.isVaild = isVaild;
 	}
 
 	public Integer getId() {
@@ -43,12 +31,12 @@ public class UserToken {
 		this.userId = userId;
 	}
 
-	public String getUserToken() {
-		return userToken;
+	public String getToken() {
+		return token;
 	}
 
-	public void setUserToken(String userToken) {
-		this.userToken = userToken;
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 	public Date getCreateTime() {
@@ -67,26 +55,26 @@ public class UserToken {
 		this.refreshTime = refreshTime;
 	}
 
-	public Date getVaildTime() {
-		return vaildTime;
+	public Date getValidTime() {
+		return validTime;
 	}
 
-	public void setVaildTime(Date vaildTime) {
-		this.vaildTime = vaildTime;
+	public void setValidTime(Date validTime) {
+		this.validTime = validTime;
 	}
 
-	public Integer getIsVaild() {
-		return isVaild;
+	public Integer getIsValid() {
+		return isValid;
 	}
 
-	public void setIsVaild(Integer isVaild) {
-		this.isVaild = isVaild;
+	public void setIsValid(Integer isValid) {
+		this.isValid = isValid;
 	}
 
 	@Override
 	public String toString() {
-		return "UserToken [id=" + id + ", userId=" + userId + ", userToken=" + userToken + ", createTime=" + createTime
-				+ ", refreshTime=" + refreshTime + ", vaildTime=" + vaildTime + ", isVaild=" + isVaild + "]";
+		return "UserToken [id=" + id + ", userId=" + userId + ", token=" + token + ", createTime=" + createTime
+				+ ", refreshTime=" + refreshTime + ", validTime=" + validTime + ", isValid=" + isValid + "]";
 	}
 
 }

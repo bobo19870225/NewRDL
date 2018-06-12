@@ -58,13 +58,13 @@ public class UserJsonController {
 			UserToken userToken = userTokenDao.getUserTokenDetails(newUserToken);
 			Date date = new Date(Calendar.getInstance().getTimeInMillis());
 			if (userToken == null) {// 没有Token就插入一个
-				newUserToken.setUserToken(access_token);
+				newUserToken.setToken(access_token);
 				newUserToken.setCreateTime(date);
 				newUserToken.setRefreshTime(date);
-				newUserToken.setIsVaild(0);
+				newUserToken.setIsValid(0);
 				userTokenDao.insert(newUserToken);
 			} else {// 有token就更新
-				userToken.setUserToken(access_token);
+				userToken.setToken(access_token);
 				userToken.setRefreshTime(date);
 				userTokenDao.update(userToken);
 			}

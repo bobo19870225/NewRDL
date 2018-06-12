@@ -15,8 +15,8 @@ public class UserTokenDynaSqlProvider {
 				if (userToken.getUserId() != null) {
 					VALUES("userId", "#{userId}");
 				}
-				if (userToken.getUserToken() != null && !userToken.getUserToken().equals("")) {
-					VALUES("userToken", "#{userId}");
+				if (userToken.getToken() != null && !userToken.getToken().equals("")) {
+					VALUES("token", "#{token}");
 				}
 				if (userToken.getCreateTime() != null) {
 					VALUES("createTime", "#{createTime}");
@@ -24,11 +24,11 @@ public class UserTokenDynaSqlProvider {
 				if (userToken.getRefreshTime() != null) {
 					VALUES("refreshTime", "#{refreshTime}");
 				}
-				if (userToken.getVaildTime() != null) {
-					VALUES("vaildTime", "#{vaildTime}");
+				if (userToken.getValidTime() != null) {
+					VALUES("validTime", "#{valdiTime}");
 				}
-				if (userToken.getIsVaild() != null) {
-					VALUES("isVaild", "#{isVaild}");
+				if (userToken.getIsValid() != null) {
+					VALUES("isValid", "#{isValid}");
 				}
 			}
 		}.toString();
@@ -62,17 +62,17 @@ public class UserTokenDynaSqlProvider {
 				if (userToken.getUserId() != null) {
 					SET(" userId = #{userId} ");
 				}
-				if (userToken.getUserToken() != null) {
-					SET(" userToken = #{userToken} ");
+				if (userToken.getToken() != null) {
+					SET(" token = #{token} ");
 				}
 				if (userToken.getRefreshTime() != null) {
 					SET(" refreshTime = #{refreshTime} ");
 				}
-				if (userToken.getVaildTime() != null) {
-					SET(" vaildTime = #{vaildTime} ");
+				if (userToken.getValidTime() != null) {
+					SET(" validTime = #{validTime} ");
 				}
-				if (userToken.getIsVaild() != null) {
-					SET(" isVaild = #{isVaild} ");
+				if (userToken.getIsValid() != null) {
+					SET(" isValid = #{isValid} ");
 				}
 				WHERE(" id = #{id} ");
 			}

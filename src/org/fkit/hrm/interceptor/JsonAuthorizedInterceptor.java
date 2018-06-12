@@ -74,9 +74,9 @@ public class JsonAuthorizedInterceptor implements HandlerInterceptor {
 			String token = request.getParameter("token");
 			/** 2.判断用户是否已经登录 */
 			UserToken newUserToken = new UserToken();
-			newUserToken.setUserToken(token);
+			newUserToken.setToken(token);
 			UserToken userToken = userTokenDao.getUserTokenDetails(newUserToken);
-			if (token == null && userToken == null) {// token不存在
+			if (token == null || token == "" && userToken == null) {// token不存在
 				ObjectMapper objectMapper = new ObjectMapper();
 				message.clean();
 				message.setCode(1003);
