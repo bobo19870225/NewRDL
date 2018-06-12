@@ -1,11 +1,16 @@
 package org.fkit.hrm.controller.stock;
 
+import java.sql.Date;
+import java.util.Calendar;
+import java.util.UUID;
+
 import javax.servlet.http.HttpSession;
 
 import org.fkit.hrm.dao.stock.MessageDao;
+import org.fkit.hrm.dao.stock.UserTokenDao;
 import org.fkit.hrm.domain.User;
+import org.fkit.hrm.domain.stock.UserToken;
 import org.fkit.hrm.service.HrmService;
-import org.fkit.hrm.util.common.HrmConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -27,6 +32,8 @@ public class UserJsonController {
 	private HrmService hrmService;
 	@Autowired
 	private MessageDao<User> messageDao;
+	@Autowired
+	private UserTokenDao userTokenDao;
 
 	/**
 	 * 处理登录请求
@@ -44,18 +51,26 @@ public class UserJsonController {
 		// 调用业务逻辑组件判断用户是否可以登录
 		User user = hrmService.login(loginname, password);
 		if (user != null) {
-			// 将用户保存到HttpSession当中
-			session.setAttribute(HrmConstants.USER_SESSION, user);
-			// 客户端跳转到main页面
-			// mv.setViewName("redirect:/main");
-		} else {
-			// 设置登录失败提示信息
-			// mv.addObject("message", "登录名或密码错误!请重新输入");
-			// 服务器内部跳转到登录页面
-			// mv.setViewName("forward:/loginForm");
+			// uuid作为token
+			String access_token = UUID.randomUUID().toString();
+			UserToken newUserToken = new UserToken();
+			newUserToken.setUserId(user.getId());
+			UserToken userToken = userTokenDao.getUserTokenDetails(newUserToken);
+			Date date = new Date(Calendar.getInstance().getTimeInMillis());
+			if (userToken == null) {// 没有Token就插入一个
+				newUserToken.setUserToken(access_token);
+				newUserToken.setCreateTime(date);
+				newUserToken.setRefreshTime(date);
+				newUserToken.setIsVaild(0);
+				userTokenDao.insert(newUserToken);
+			} else {// 有token就更新
+				userToken.setUserToken(access_token);
+				userToken.setRefreshTime(date);
+				userTokenDao.update(userToken);
+			}
+			user.setUserToken(access_token);
 		}
 		return messageDao.getMessage(user);
-		// return mv;
 
 	}
 }

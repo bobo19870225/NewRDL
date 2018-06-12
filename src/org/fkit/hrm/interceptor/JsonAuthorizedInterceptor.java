@@ -2,15 +2,17 @@ package org.fkit.hrm.interceptor;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
+import java.util.Calendar;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.fkit.hrm.domain.User;
+import org.fkit.hrm.dao.stock.UserTokenDao;
 import org.fkit.hrm.domain.stock.Message;
-import org.fkit.hrm.util.common.HrmConstants;
+import org.fkit.hrm.domain.stock.UserToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,6 +26,8 @@ public class JsonAuthorizedInterceptor implements HandlerInterceptor {
 	private Logger logger = LogManager.getLogger(JsonAuthorizedInterceptor.class);
 	@Autowired
 	private Message<Object> message;
+	@Autowired
+	private UserTokenDao userTokenDao;
 	/** 定义不需要拦截的请求 */
 	private static final String[] IGNORE_URI = { "/loginForm", "/login", "/404.html" };
 
@@ -67,20 +71,22 @@ public class JsonAuthorizedInterceptor implements HandlerInterceptor {
 		/** 拦截请求 */
 		if (!flag) {
 			/** 1.获取session中的用户 */
-			User user = (User) request.getSession().getAttribute(HrmConstants.USER_SESSION);
+			String token = request.getParameter("token");
 			/** 2.判断用户是否已经登录 */
-			if (user == null) {
+			UserToken newUserToken = new UserToken();
+			newUserToken.setUserToken(token);
+			UserToken userToken = userTokenDao.getUserTokenDetails(newUserToken);
+			if (token == null && userToken == null) {// token不存在
 				ObjectMapper objectMapper = new ObjectMapper();
 				message.clean();
 				message.setCode(1003);
 				message.setMsg("用户未登录！");
 				String userJsonStr = objectMapper.writeValueAsString(message);// 返回字符串，输出
 				returnJson(response, userJsonStr);
-				/** 如果用户没有登录，跳转到登录页面 */
-				// request.setAttribute("message", "请先登录再访问网站!");
-				// request.getRequestDispatcher(HrmConstants.LOGIN).forward(request, response);
 				return flag;
-			} else {
+			} else {// 更新Token
+				userToken.setRefreshTime(new Date(Calendar.getInstance().getTimeInMillis()));
+				userTokenDao.update(userToken);
 				flag = true;
 			}
 		}

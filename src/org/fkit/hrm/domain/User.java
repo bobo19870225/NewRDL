@@ -17,11 +17,11 @@ public class User implements Serializable {
 	private String password; // 密码
 	private Integer status; // 状态
 	private Date createDate; // 建档日期
+	private String userToken;
 
 	// 无参数构造器
 	public User() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	// setter和getter方法
@@ -73,10 +73,18 @@ public class User implements Serializable {
 		this.createDate = createDate;
 	}
 
+	public String getUserToken() {
+		return userToken;
+	}
+
+	public void setUserToken(String userToken) {
+		this.userToken = userToken;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", loginname=" + loginname + ", password=" + password
-				+ ", status=" + status + ", createDate=" + createDate + "]";
+				+ ", status=" + status + ", createDate=" + createDate + ", userToken=" + userToken + "]";
 	}
 
 }

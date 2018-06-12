@@ -12,6 +12,7 @@ public class HrmConstants {
 	public static final String PROVINCETABLE = "provinces";
 	public static final String CITYTABLE = "cities";
 	public static final String AREATABLE = "areas";
+	public static final String USERTOKENTABLE = "user_token";
 	
 	public static final String DEPTTABLE = "dept_inf";
 	public static final String JOBTABLE = "job_inf";
