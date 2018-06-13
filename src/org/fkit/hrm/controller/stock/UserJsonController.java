@@ -68,7 +68,7 @@ public class UserJsonController {
 				userToken.setRefreshTime(date);
 				userTokenDao.update(userToken);
 			}
-			user.setUserToken(access_token);
+			user.setToken(access_token);
 		}
 		return messageDao.getMessage(user);
 

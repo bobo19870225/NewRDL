@@ -17,14 +17,13 @@ public class User implements Serializable {
 	private String password; // 密码
 	private Integer status; // 状态
 	private Date createDate; // 建档日期
-	private String userToken;
+	private String token;
 
 	// 无参数构造器
 	public User() {
 		super();
 	}
 
-	// setter和getter方法
 	public Integer getId() {
 		return id;
 	}
@@ -73,18 +72,18 @@ public class User implements Serializable {
 		this.createDate = createDate;
 	}
 
-	public String getUserToken() {
-		return userToken;
+	public String getToken() {
+		return token;
 	}
 
-	public void setUserToken(String userToken) {
-		this.userToken = userToken;
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", loginname=" + loginname + ", password=" + password
-				+ ", status=" + status + ", createDate=" + createDate + ", userToken=" + userToken + "]";
+				+ ", status=" + status + ", createDate=" + createDate + ", token=" + token + "]";
 	}
 
 }
