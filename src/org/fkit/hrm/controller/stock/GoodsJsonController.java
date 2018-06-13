@@ -1,7 +1,7 @@
 
 package org.fkit.hrm.controller.stock;
 
-import java.util.List;
+import java.util.Map;
 
 import org.fkit.hrm.dao.stock.MessageDao;
 import org.fkit.hrm.domain.stock.Goods;
@@ -43,8 +43,8 @@ public class GoodsJsonController {
 		if (pageSize != null) {
 			pageModel.setPageSize(pageSize);
 		}
-		List<Goods> goodsList = stockService.getGoodsList(goods, pageModel);
-		return messageDao.getMessage(goodsList);
+		Map<String, Object> map = stockService.getGoodsList(goods, pageModel);
+		return messageDao.getMessage(map);
 	}
 
 	@RequestMapping(value = "/getGoodsDetails")

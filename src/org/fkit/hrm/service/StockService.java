@@ -4,6 +4,7 @@
 package org.fkit.hrm.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.fkit.hrm.domain.stock.Address;
 import org.fkit.hrm.domain.stock.Area;
@@ -28,7 +29,7 @@ public interface StockService {
 	 *            分页信息
 	 * @return 带分页的库存记录列表
 	 */
-	List<Goods> getGoodsList(Goods goods, PageModel pageModel);
+	Map<String, Object> getGoodsList(Goods goods, PageModel pageModel);
 
 	/**
 	 * 获取某个商品的详情

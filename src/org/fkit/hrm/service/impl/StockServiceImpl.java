@@ -54,8 +54,9 @@ public class StockServiceImpl implements StockService {
 	@Autowired
 	private AreaDao areaDao;
 
+	@Transactional(readOnly = true)
 	@Override
-	public List<Goods> getGoodsList(Goods goods, PageModel pageModel) {
+	public Map<String, Object> getGoodsList(Goods goods, PageModel pageModel) {
 		/** 当前需要分页的总数据条数 */
 		Map<String, Object> params = new HashMap<>();
 		params.put("goods", goods);
@@ -66,8 +67,10 @@ public class StockServiceImpl implements StockService {
 			params.put("pageModel", pageModel);
 		}
 		List<Goods> goodsList = goodsDao.selectByPage(params);
-		return goodsList;
-
+		Map<String, Object> retrunParams = new HashMap<>();
+		retrunParams.put("content", goodsList);
+		retrunParams.put("pageModel", pageModel);
+		return retrunParams;
 	}
 
 	@Transactional(readOnly = true)

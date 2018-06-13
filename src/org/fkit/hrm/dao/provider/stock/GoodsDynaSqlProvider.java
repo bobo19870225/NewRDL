@@ -17,7 +17,7 @@ public class GoodsDynaSqlProvider {
 				if (params.get("goods") != null) {
 					Goods goods = (Goods) params.get("goods");
 					if (goods.getId() != null && goods.getId() != 0) {
-						WHERE(" goodsId = #{stock.goodsId} ");
+						WHERE(" id = #{goods.id} ");
 					}
 				}
 			}
@@ -39,7 +39,7 @@ public class GoodsDynaSqlProvider {
 				if (params.get("goods") != null) {
 					Goods goods = (Goods) params.get("goods");
 					if (goods.getId() != null && goods.getId() != 0) {
-						WHERE(" goodsId = #{stock.goodsId} ");
+						WHERE(" id = #{goods.id} ");
 					}
 				}
 			}
