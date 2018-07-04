@@ -1,4 +1,4 @@
-package org.fkit.hrm.controller;
+package org.fkit.hrm.controller.stock;
 
 import java.io.File;
 import java.util.List;
@@ -21,17 +21,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * @Description: 处理上传下载文件请求控制器 <br>
- *               网站：<a href="http://www.fkit.org">疯狂Java</a>
- * @author 肖文吉 36750064@qq.com
- * @version V1.0
+ * @Description: 处理上传下载文件请求控制器
+ * 
  */
 
 @Controller
-public class DocumentController {
+@RequestMapping(value = "json")
+public class DocumentJsonController {
 
 	/**
 	 * 自动注入UserService
@@ -39,23 +39,6 @@ public class DocumentController {
 	@Autowired
 	@Qualifier("hrmService")
 	private HrmService hrmService;
-
-	/**
-	 * 处理/login请求
-	 */
-	@RequestMapping(value = "/document/selectDocument")
-	public String selectDocument(Model model, Integer pageIndex, @ModelAttribute Document document) {
-		PageModel pageModel = new PageModel();
-		if (pageIndex != null) {
-			pageModel.setPageIndex(pageIndex);
-		}
-		/** 查询用户信息 */
-		List<Document> documents = hrmService.findDocument(document, pageModel);
-		model.addAttribute("documents", documents);
-		model.addAttribute("pageModel", pageModel);
-		return "document/document";
-
-	}
 
 	/**
 	 * 处理添加请求
@@ -150,13 +133,19 @@ public class DocumentController {
 	/**
 	 * 处理文档下载请求
 	 * 
-	 * 
+	 * @param String
+	 *            flag 标记， 1表示跳转到修改页面，2表示执行修改操作
+	 * @param Document
+	 *            document 要修改文档的对象
+	 * @param ModelAndView
+	 *            mv
 	 */
 	@RequestMapping(value = "/document/downLoad")
-	public ResponseEntity<byte[]> downLoad(Integer id, HttpSession session) throws Exception {
+	public ResponseEntity<byte[]> downLoad(@RequestParam("fileName") String fileName, HttpSession session)
+			throws Exception {
 		// 根据id查询文档
-		Document target = hrmService.findDocumentById(id);
-		String fileName = target.getFileName();
+		// Document target = hrmService.findDocumentById(id);
+		// String fileName = target.getFileName();
 		// 上传文件路径
 		String path = session.getServletContext().getRealPath("/upload/");
 		// 获得要下载文件的File对象
